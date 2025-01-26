@@ -1,0 +1,282 @@
+﻿@model MVC_Project.Models.RegistrationViewModel
+
+@{
+    ViewBag.Title = "Register";
+    ViewBag.HideNavBar = true; // Signal to the layout to hide the nav bar
+}
+
+@using (Html.BeginForm("SubmitForm", "Home", FormMethod.Post, new { id = "registrationForm" }))
+{
+    <div id="form-container">
+        @if (Model.Registrations != null && Model.Registrations.Any())
+        {
+            for (int i = 0; i < Model.Registrations.Count; i++)
+            {
+                <div class="form-section box">
+                    <button type="button" class="delete-btn btn btn-danger btn-sm">Delete</button>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Registrations[i].Name, "Name", new { @class = "control-label" })
+                        <span style="color: red;">*</span>
+                        @Html.TextBoxFor(m => m.Registrations[i].Name, new { @class = "form-control", placeholder = "Enter Name,Max 100", maxlength = "100" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Registrations[i].PhoneNo, "Phone Number", new { @class = "control-label" })
+                        <span style="color: red;">*</span>
+                        @Html.TextBoxFor(m => m.Registrations[i].PhoneNo, new { @class = "form-control", placeholder = "Enter Phone Number, Should be 10 numbers", type = "number", maxlength = "10" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Registrations[i].Email, "Email", new { @class = "control-label" })
+                        <span style="color: red;">*</span>
+                        @Html.TextBoxFor(m => m.Registrations[i].Email, new { @class = "form-control", placeholder = "Enter Email,Max 100", maxlength = "100" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Gender", new { @class = "control-label" })
+                        <span style="color: red;">*</span>
+                        <div>
+                            @Html.RadioButtonFor(m => m.Registrations[i].Gender, "Male") Male
+                            @Html.RadioButtonFor(m => m.Registrations[i].Gender, "Female") Female
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Skills")
+                        <span style="color: red;">*&nbsp;</span><span>&nbsp;(Any One)</span>
+                        <div>
+                            <input type="checkbox" name="Registrations[@i].IsMvcSkill" value="Yes"
+                                   @(Model.Registrations[i].IsMvcSkill == "True" ? "checked" : "") />
+                            MVC
+                        </div>
+                        <div>
+                            <input type="checkbox" name="Registrations[@i].IsCSharpSkill" value="Yes"
+                                   @(Model.Registrations[i].IsCSharpSkill == "True" ? "checked" : "") />
+                            C#
+                        </div>
+                        <div>
+                            <input type="checkbox" name="Registrations[@i].IsAspNetSkill" value="Yes"
+                                   @(Model.Registrations[i].IsAspNetSkill == "True" ? "checked" : "") />
+                            ASP.NET
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Registrations[i].Address, "Address", new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.Registrations[i].Address, new { @class = "form-control", placeholder = "Enter Address (Optional),Max 255",maxlength = "255" })
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            // Initial single registration form section
+            <div class="form-section box">
+                <button type="button" class="delete-btn btn btn-danger btn-sm">Delete</button>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Registrations[0].Name, "Name", new { @class = "control-label" })
+                    <span style="color: red;">*</span>
+                    @Html.TextBoxFor(m => m.Registrations[0].Name, new { @class = "form-control", placeholder = "Enter Name,Max 100", maxlength = "255" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Registrations[0].PhoneNo, "Phone Number", new { @class = "control-label" })
+                    <span style="color: red;">*</span>
+                    @Html.TextBoxFor(m => m.Registrations[0].PhoneNo, new { @class = "form-control", placeholder = "Enter Phone Number, Should be 10 numbers", type = "number", maxlength = "10" })
+                    </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Registrations[0].Email, "Email", new { @class = "control-label" })
+                    <span style="color: red;">*</span>
+                    @Html.TextBoxFor(m => m.Registrations[0].Email, new { @class = "form-control", placeholder = "Enter Email,Max 100", maxlength = "100" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Gender", new { @class = "control-label" })
+                    <span style="color: red;">*</span>
+                    <div>
+                        @Html.RadioButtonFor(m => m.Registrations[0].Gender, "Male") Male
+                        @Html.RadioButtonFor(m => m.Registrations[0].Gender, "Female") Female
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Skills")
+                    <span style="color: red;">*&nbsp;</span><span>&nbsp;(Any One)</span>                  
+                    <div>
+                        <input type="checkbox" name="Registrations[0].IsMvcSkill" value="Yes" />
+                        MVC
+                    </div>
+                    <div>
+                        <input type="checkbox" name="Registrations[0].IsCSharpSkill" value="Yes" />
+                        C#
+                    </div>
+                    <div>
+                        <input type="checkbox" name="Registrations[0].IsAspNetSkill" value="Yes" />
+                        ASP.NET
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Registrations[0].Address, "Address", new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.Registrations[0].Address, new { @class = "form-control", placeholder = "Enter Address (Optional),Max 255", maxlength = "255" })
+                </div>
+            </div>
+        }
+    </div>
+
+    <button type="button" id="add-button" class="btn btn-primary">Add More</button>
+    <button type="button" onclick="SubmitForm();" class="btn btn-success">Submit</button>
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<script>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <text>
+            alert("@TempData["AlertMessage"]");
+        </text>
+    }
+</script>
+
+<style>
+    .box {
+        border: 2px solid #007bff;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .delete-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+</style>
+
+<script>
+    // Add more sections
+    document.getElementById('add-button').addEventListener('click', function () {
+        const formContainer = document.getElementById('form-container');
+        const lastFormSection = formContainer.querySelector('.form-section:last-of-type');
+        const newFormSection = lastFormSection.cloneNode(true);
+
+        // Update the indexes in the cloned form section
+        const index = formContainer.querySelectorAll('.form-section').length;
+        newFormSection.innerHTML = newFormSection.innerHTML.replace(/\[\d+\]/g, `[${index}]`);
+
+        // Clear input values in the cloned form
+        const inputs = newFormSection.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            if (input.type === 'checkbox' || input.type === 'radio') {
+                input.checked = false; // Uncheck checkboxes and radio buttons
+            } else {
+                input.value = ''; // Clear textboxes and textareas
+            }
+        });
+
+        formContainer.appendChild(newFormSection);
+    });
+
+    // Delete section
+    document.getElementById('form-container').addEventListener('click', function (event) {
+        if (event.target.classList.contains('delete-btn')) {
+            const section = event.target.closest('.form-section');
+            section.remove();
+        }
+    });
+
+    function SubmitForm() {
+        const form = document.querySelector('#registrationForm');
+        const sections = form.querySelectorAll('.form-section'); // Each registration section
+        const registrations = [];
+
+        let isValid = true; // Validation flag
+
+        sections.forEach((section) => {
+            const registration = {};
+            const inputs = section.querySelectorAll('input, textarea');
+
+            let hasSkill = false; // Flag to check if at least one skill is selected
+            let hasGender = false; // Flag to check if gender is selected
+
+            for (let input of inputs) {
+                const name = input.name.split('.').pop(); // Extract field name (e.g., Name, PhoneNo)
+                if (input.type === 'checkbox' && name.includes('Skill')) {
+                    if (input.checked) {
+                        hasSkill = true; // Set the flag if any skill is checked
+                    }
+                    registration[name] = input.checked; // Boolean: true if checked, false otherwise
+                } else if (input.type === 'radio' && name === 'Gender') {
+                    if (input.checked) {
+                        hasGender = true;
+                        registration[name] = input.value;
+                    }
+                } else if (input.type !== 'checkbox' && input.type !== 'radio') {
+                    registration[name] = input.value;
+
+                    // Validate mandatory fields one by one
+                    if (name === 'Name' && input.value.trim() === '') {
+                        alert('Name is required.');
+                        isValid = false;
+                        return;
+                    }
+                    if (name === 'PhoneNo' && !/^\d{10}$/.test(input.value)) {
+                        alert('Phone Number must be 10 digits or should not be empty.');
+                        isValid = false;
+                        return;
+                    }
+                    if (name === 'Email' && input.value.trim() === '') {
+                        alert('Email is required.');
+                        isValid = false;
+                        return;
+                    }
+                }
+            }
+
+            // Check for gender
+            if (!hasGender) {
+                alert('Gender is required.');
+                isValid = false;
+                return;
+            }
+
+            // Check for skills (any one skill)
+            if (!hasSkill) {
+                alert('At least one skill must be selected.');
+                isValid = false;
+                return;
+            }
+
+            registrations.push(registration);
+        });
+
+        // If not valid, stop further processing
+        if (!isValid) {
+            return;
+        }
+
+        const data = { Registrations: registrations };
+
+        console.log('Converted Data:', JSON.stringify(data)); // Log for debugging
+
+        fetch('/Home/SubmitForm', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert(result.message);
+                    window.location.href = '/Home/Register';
+                } else {
+                    alert(`Error: ${result.message}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An unexpected error occurred. Please try again later.');
+            });
+    }
+
+</script>
